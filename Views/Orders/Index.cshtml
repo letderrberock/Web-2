@@ -1,0 +1,40 @@
+﻿@model BookStore.ViewModels.OrdersList
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book's name</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    @if (this.Context.Session.GetString("loggedUser") == null)
+    {
+        <h1>Log in first to view content.</h1>
+
+    }
+    else
+    {
+    <tbody>
+        @foreach (OrderItems item in Model.OrderList)
+        {
+            <tr>
+                <td>
+                    @item.BookName
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Orders" asp-action="Delete" asp-route-id="@item.BookId">Remove</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    }
+</table>
+<a class="btn btn-outline-success" asp-controller="Books" asp-action="Index">Add Book To Order</a>
